@@ -2,10 +2,10 @@ pipeline {
     agent {
         label 'nodejs-slave'
     }
-    environment {
-        DOCKER_IMAGE = 'react-app'
-        DOCKER_TAG = 'latest'
-    }
+    // environment {
+    //     DOCKER_IMAGE = 'react-app'
+    //     DOCKER_TAG = 'latest'
+    // }
 
     stages {
         stage('Checkout') {
@@ -13,16 +13,13 @@ pipeline {
                 checkout scm
             }
         }
-        
         stage('Install Dependencies') {
             steps {
                 // dir('react-app') {
                 // }
                     sh 'npm install'
             }
-            
         }
-        
         stage('Build') {
             steps {
                 // dir('react-app') {
@@ -30,7 +27,17 @@ pipeline {
                     sh 'npm run build'
             }
         }
-        
+        stage('Docker Build & Push') {
+            steps {
+                script {
+                    def commitHash = sh(script: 'git rev-parse --short=6 HEAD', returnStdout: true).trim()
+                    def dockerImage = "phuongtn20/frontend-app:${commitHash}"
+
+                    sh "docker build -t ${dockerImage} ."
+                    sh "docker push ${dockerImage}"
+                }
+            }
+        }
         stage('Test') {
             steps {
                 // dir('react-app') {
@@ -53,7 +60,6 @@ pipeline {
         //         }
         //     }
         // }
-
         stage('Build Docker Image') {
             steps {
                 // dir('react-app') {
@@ -61,7 +67,6 @@ pipeline {
                 sh 'docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .'
             }
         }
-
         stage('Deploy') {
             steps {
                 sh '''
@@ -71,8 +76,6 @@ pipeline {
                 '''
             }
         }
-
-
         stage('Archive') {
             steps {
                 // dir('react-app') {
