@@ -38,13 +38,13 @@ pipeline {
                 }
             }
         }
-        // stage('Test') {
-        //     steps {
-        //         // dir('react-app') {
-        //         // }
-        //             sh 'npm test -- --watchAll=false'
-        //     }
-        // }
+        stage('Test') {
+            steps {
+                // dir('react-app') {
+                // }
+                    sh 'npm test -- --watchAll=false'
+            }
+        }
 
         // stage('Deploy') {
         //     steps {
@@ -76,11 +76,6 @@ pipeline {
         //         '''
         //     }
         // }
-        post {
-            success {
-                echo 'Frontend Docker image pushed successfully.'
-            }
-        }
         // stage('Archive') {
         //     steps {
         //         // dir('react-app') {
@@ -89,4 +84,9 @@ pipeline {
         //     }
         // }
     }
+        post {
+            success {
+                echo 'Frontend Docker image pushed successfully.'
+            }
+        }
 }
