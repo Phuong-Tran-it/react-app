@@ -33,8 +33,11 @@ pipeline {
                     def commitHash = sh(script: 'git rev-parse --short=6 HEAD', returnStdout: true).trim()
                     def dockerImage = "phuongtn20/frontend-app:${commitHash}"
 
-                    sh "docker build -t ${dockerImage} ."
-                    sh "docker push ${dockerImage}"
+                    withCredentials([usernamePassword(credentialsId: 'phuongtn20-docker', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh "echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin"
+                        sh "docker build -t ${dockerImage} ."
+                        sh "docker push ${dockerImage}"
+                    }
                 }
             }
         }
