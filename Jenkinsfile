@@ -16,26 +16,26 @@ pipeline {
         
         stage('Install Dependencies') {
             steps {
-                dir('react-app') {
+                // dir('react-app') {
+                // }
                     sh 'npm install'
-                }
             }
             
         }
         
         stage('Build') {
             steps {
-                dir('react-app') {
+                // dir('react-app') {
+                // }
                     sh 'npm run build'
-                }
             }
         }
         
         stage('Test') {
             steps {
-                dir('react-app') {
+                // dir('react-app') {
+                // }
                     sh 'npm test -- --watchAll=false'
-                }
             }
         }
 
@@ -56,9 +56,9 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                dir('react-app') {
-                    sh 'docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .'
-                }
+                // dir('react-app') {
+                // }
+                sh 'docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .'
             }
         }
 
@@ -75,9 +75,9 @@ pipeline {
 
         stage('Archive') {
             steps {
-                dir('react-app') {
+                // dir('react-app') {
+                // }
                     archiveArtifacts artifacts: 'build/**/*', fingerprint: true
-                }
             }
         }
     }
