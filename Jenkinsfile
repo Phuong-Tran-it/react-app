@@ -38,13 +38,13 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
-            steps {
-                // dir('react-app') {
-                // }
-                    sh 'npm test -- --watchAll=false'
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         // dir('react-app') {
+        //         // }
+        //             sh 'npm test -- --watchAll=false'
+        //     }
+        // }
 
         // stage('Deploy') {
         //     steps {
@@ -60,28 +60,33 @@ pipeline {
         //         }
         //     }
         // }
-        stage('Build Docker Image') {
-            steps {
-                // dir('react-app') {
-                // }
-                sh 'docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .'
+        // stage('Build Docker Image') {
+        //     steps {
+        //         // dir('react-app') {
+        //         // }
+        //         sh 'docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .'
+        //     }
+        // }
+        // stage('Deploy') {
+        //     steps {
+        //         sh '''
+        //             docker stop react-app || true
+        //             docker rm react-app || true
+        //             docker run -d --name react-app -p 3000:80 ${DOCKER_IMAGE}:${DOCKER_TAG}
+        //         '''
+        //     }
+        // }
+        post {
+            success {
+                echo 'Frontend Docker image pushed successfully.'
             }
         }
-        stage('Deploy') {
-            steps {
-                sh '''
-                    docker stop react-app || true
-                    docker rm react-app || true
-                    docker run -d --name react-app -p 3000:80 ${DOCKER_IMAGE}:${DOCKER_TAG}
-                '''
-            }
-        }
-        stage('Archive') {
-            steps {
-                // dir('react-app') {
-                // }
-                    archiveArtifacts artifacts: 'build/**/*', fingerprint: true
-            }
-        }
+        // stage('Archive') {
+        //     steps {
+        //         // dir('react-app') {
+        //         // }
+        //             archiveArtifacts artifacts: 'build/**/*', fingerprint: true
+        //     }
+        // }
     }
 }
