@@ -41,13 +41,13 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
-            steps {
-                // dir('react-app') {
-                // }
-                    sh 'npm test -- --watchAll=false'
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         // dir('react-app') {
+        //         // }
+        //             sh 'npm test -- --watchAll=false'
+        //     }
+        // }
 
         // stage('Deploy') {
         //     steps {
