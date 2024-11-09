@@ -13,20 +13,20 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Install Dependencies') {
-            steps {
-                // dir('react-app') {
-                // }
-                    sh 'npm install'
-            }
-        }
-        stage('Build') {
-            steps {
-                // dir('react-app') {
-                // }
-                    sh 'npm run build'
-            }
-        }
+        // stage('Install Dependencies') {
+        //     steps {
+        //         // dir('react-app') {
+        //         // }
+        //             sh 'npm install'
+        //     }
+        // }
+        // stage('Build') {
+        //     steps {
+        //         // dir('react-app') {
+        //         // }
+        //             sh 'npm run build'
+        //     }
+        // }
         stage('Docker Build & Push') {
             steps {
                 script {
